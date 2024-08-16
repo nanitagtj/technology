@@ -16,5 +16,7 @@ public class Constants {
     public static final String BAD_REQUEST = "Bad_Request";
     public static final String DB_ERROR = "Data integrity violation";
     public static final String NOT_NULL = "Fields cannot be null";
+    public static final int MAX_NAME_LENGTH = 50;
+    public static final int MAX_DESCRIPTION_LENGTH = 90;
 
 }

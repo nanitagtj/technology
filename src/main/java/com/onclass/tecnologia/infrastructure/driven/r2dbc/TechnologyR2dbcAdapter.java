@@ -1,15 +1,17 @@
 package com.onclass.tecnologia.infrastructure.driven.r2dbc;
 
+import com.onclass.tecnologia.application.config.ErrorResponse;
 import com.onclass.tecnologia.domain.model.Technology;
 import com.onclass.tecnologia.domain.spi.ITechnologyPersistencePort;
 import com.onclass.tecnologia.infrastructure.driven.entity.TechnologyEntity;
 import com.onclass.tecnologia.infrastructure.driven.mappers.TechnologyEntityMapper;
 import com.onclass.tecnologia.infrastructure.driven.repository.ITechnologyRepository;
+import com.onclass.tecnologia.infrastructure.driving.exceptions.TechnologyNameAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import reactor.core.publisher.Mono;
 
-import javax.swing.text.html.parser.Entity;
+
 
 @RequiredArgsConstructor
 public class TechnologyR2dbcAdapter implements ITechnologyPersistencePort {
@@ -22,7 +24,8 @@ public class TechnologyR2dbcAdapter implements ITechnologyPersistencePort {
 
         TechnologyEntity entity = technologyEntityMapper.toEntity(technology);
         return technologyRepository.save(entity)
-                .map(technologyEntityMapper::toModel);
+                .map(technologyEntityMapper::toModel)
+                .onErrorResume(DuplicateKeyException.class, ex -> Mono.error(new TechnologyNameAlreadyExistsException()));
     }
 
 

@@ -3,6 +3,7 @@ package com.onclass.tecnologia.application.config;
 import com.onclass.tecnologia.domain.api.ITechnologyServicePort;
 import com.onclass.tecnologia.domain.spi.ITechnologyPersistencePort;
 import com.onclass.tecnologia.domain.usecase.TechnologyUseCase;
+import com.onclass.tecnologia.domain.validations.Validations;
 import com.onclass.tecnologia.infrastructure.driven.mappers.TechnologyEntityMapper;
 import com.onclass.tecnologia.infrastructure.driven.r2dbc.TechnologyR2dbcAdapter;
 import com.onclass.tecnologia.infrastructure.driven.repository.ITechnologyRepository;
@@ -29,8 +30,13 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public ITechnologyServicePort technologyServicePort(ITechnologyPersistencePort technologyPersistencePort) {
-        return new TechnologyUseCase(technologyPersistencePort);
+    public Validations validations() {
+        return new Validations();
+    }
+
+    @Bean
+    public ITechnologyServicePort technologyServicePort(ITechnologyPersistencePort technologyPersistencePort, Validations validations) {
+        return new TechnologyUseCase(technologyPersistencePort, validations);
     }
 
     @Bean
