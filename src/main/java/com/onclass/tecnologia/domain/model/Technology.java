@@ -1,25 +1,28 @@
 package com.onclass.tecnologia.domain.model;
 
+import lombok.ToString;
+
+@ToString
 public class Technology {
 
-    private Long id;
+    private int id;
     private String name;
     private String description;
 
     public Technology() {
     }
 
-    public Technology(Long id, String name, String description) {
+    public Technology(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

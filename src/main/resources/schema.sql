@@ -4,3 +4,5 @@ CREATE TABLE IF NOT EXISTS technology (
     description VARCHAR(90) NOT NULL,
     UNIQUE (name)
 );
+
+
